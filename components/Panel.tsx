@@ -11,8 +11,10 @@ export default function Panel({
 }) {
   return (
     <section className={`card p-5 ${className}`}>
-      <div className="mb-4 flex items-center justify-between">
-        <h2 className="text-sm font-semibold">{title}</h2>
+      <div className="mb-4 flex items-center justify-between gap-3">
+        <h2 className="font-display text-sm font-semibold uppercase tracking-[0.1em] text-text">
+          {title}
+        </h2>
         {action}
       </div>
       {children}

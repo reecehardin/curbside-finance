@@ -4,7 +4,7 @@ import { Cell, Pie, PieChart, ResponsiveContainer, Tooltip } from "recharts";
 import { formatMoney } from "@/lib/format";
 import type { RankedItem } from "@/lib/queries";
 
-const COLORS = ["#e08a4a", "#3fc5d8", "#818cf8", "#34d77f", "#f1657a", "#a78bfa"];
+const COLORS = ["#ff3d7f", "#22d3ee", "#a06bff", "#2fe88f", "#3d8bff", "#f5b73d"];
 
 export default function ExpenseDonut({ data }: { data: RankedItem[] }) {
   const total = data.reduce((acc, d) => acc + d.amount, 0);
@@ -28,9 +28,9 @@ export default function ExpenseDonut({ data }: { data: RankedItem[] }) {
           </Pie>
           <Tooltip
             contentStyle={{
-              background: "#101512",
-              border: "1px solid #1d2722",
-              borderRadius: 8,
+              background: "#0d0f1a",
+              border: "1px solid #2f3556",
+              borderRadius: 10,
               fontSize: 12,
             }}
             formatter={(value: number) => formatMoney(value)}
@@ -46,7 +46,9 @@ export default function ExpenseDonut({ data }: { data: RankedItem[] }) {
               style={{ background: COLORS[i % COLORS.length] }}
             />
             <span className="flex-1 truncate text-muted">{d.name}</span>
-            <span className="font-medium">{formatMoney(d.amount)}</span>
+            <span className="font-display font-medium text-text">
+              {formatMoney(d.amount)}
+            </span>
             <span className="w-10 text-right text-xs text-muted-2">
               {total > 0 ? Math.round((d.amount / total) * 100) : 0}%
             </span>

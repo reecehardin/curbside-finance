@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { Plus, X } from "lucide-react";
 import { addExpense } from "@/lib/actions";
 import { EXPENSE_CATEGORIES } from "@/lib/types";
 
@@ -31,23 +32,35 @@ export default function AddExpenseModal() {
 
   return (
     <>
-      <button onClick={() => setOpen(true)} className="btn-accent">
-        + Add Expense
+      <button onClick={() => setOpen(true)} className="btn-primary">
+        <Plus size={16} />
+        Add Expense
       </button>
 
       {open && (
         <div
-          className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 p-4"
+          className="fixed inset-0 z-50 flex items-center justify-center bg-bg-deep/80 p-4 backdrop-blur-sm"
           onClick={() => !pending && setOpen(false)}
         >
           <div
-            className="card w-full max-w-md p-6"
+            className="card w-full max-w-md animate-fade-up p-6"
             onClick={(e) => e.stopPropagation()}
           >
-            <h2 className="text-lg font-bold">Add Expense</h2>
-            <p className="mt-0.5 text-sm text-muted">
-              Record something you paid for.
-            </p>
+            <div className="flex items-start justify-between">
+              <div>
+                <h2 className="heading text-lg text-text">Add Expense</h2>
+                <p className="mt-0.5 text-sm text-muted">
+                  Record something you paid for.
+                </p>
+              </div>
+              <button
+                onClick={() => setOpen(false)}
+                className="text-muted-2 transition-colors hover:text-text"
+                aria-label="Close"
+              >
+                <X size={18} />
+              </button>
+            </div>
 
             <form action={onSubmit} className="mt-5 space-y-4">
               <div>
@@ -57,7 +70,7 @@ export default function AddExpenseModal() {
                   required
                   autoFocus
                   placeholder="e.g. Monthly server hosting"
-                  className="input mt-1"
+                  className="input mt-1.5"
                 />
               </div>
 
@@ -71,7 +84,7 @@ export default function AddExpenseModal() {
                     min="0.01"
                     required
                     placeholder="0.00"
-                    className="input mt-1"
+                    className="input mt-1.5"
                   />
                 </div>
                 <div>
@@ -80,7 +93,7 @@ export default function AddExpenseModal() {
                     name="occurred_at"
                     type="date"
                     defaultValue={today()}
-                    className="input mt-1"
+                    className="input mt-1.5"
                   />
                 </div>
               </div>
@@ -90,7 +103,7 @@ export default function AddExpenseModal() {
                 <select
                   name="category"
                   defaultValue={EXPENSE_CATEGORIES[0]}
-                  className="input mt-1"
+                  className="input mt-1.5 cursor-pointer"
                 >
                   {EXPENSE_CATEGORIES.map((c) => (
                     <option key={c} value={c}>
@@ -111,11 +124,11 @@ export default function AddExpenseModal() {
                   type="button"
                   onClick={() => setOpen(false)}
                   disabled={pending}
-                  className="rounded-lg px-4 py-2 text-sm text-muted hover:text-text"
+                  className="btn-ghost"
                 >
                   Cancel
                 </button>
-                <button type="submit" disabled={pending} className="btn-accent">
+                <button type="submit" disabled={pending} className="btn-primary">
                   {pending ? "Saving…" : "Save Expense"}
                 </button>
               </div>

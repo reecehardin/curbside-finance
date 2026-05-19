@@ -10,8 +10,10 @@ export const config = {
     /*
      * Run on all routes except:
      *  - the Tebex webhook (authenticated by signature, not by session)
-     *  - Next.js internals and static assets
+     *  - Next.js internals
+     *  - static asset files (images, fonts) — so e.g. /logo.png is served
+     *    directly instead of being redirected to /login
      */
-    "/((?!api/tebex|_next/static|_next/image|favicon.ico).*)",
+    "/((?!api/tebex|_next/static|_next/image|favicon.ico|.*\\.(?:png|jpg|jpeg|gif|svg|ico|webp|txt)).*)",
   ],
 };

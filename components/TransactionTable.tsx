@@ -10,22 +10,17 @@ export default function TransactionTable({
   variant: "income" | "expense";
 }) {
   const isIncome = variant === "income";
-  const detailHeader = isIncome ? "Customer" : "Category";
 
   return (
     <div className="card overflow-hidden">
       <table className="w-full text-sm">
         <thead>
-          <tr className="border-b border-border text-left text-xs uppercase tracking-wide text-muted-2">
-            <th className="px-4 py-3 font-medium">Date</th>
-            <th className="px-4 py-3 font-medium">
-              {isIncome ? "Package" : "Description"}
-            </th>
-            <th className="px-4 py-3 font-medium">{detailHeader}</th>
-            <th className="px-4 py-3 text-right font-medium">Amount</th>
-            <th className="px-4 py-3 text-right font-medium">
-              {isIncome ? "Status" : ""}
-            </th>
+          <tr className="border-b border-border text-left">
+            <Th>Date</Th>
+            <Th>{isIncome ? "Package" : "Description"}</Th>
+            <Th>{isIncome ? "Customer" : "Category"}</Th>
+            <Th className="text-right">Amount</Th>
+            <Th className="text-right">{isIncome ? "Status" : ""}</Th>
           </tr>
         </thead>
         <tbody>
@@ -34,21 +29,21 @@ export default function TransactionTable({
             return (
               <tr
                 key={t.id}
-                className="border-b border-border last:border-0 hover:bg-surface-2"
+                className="border-b border-border/70 transition-colors last:border-0 hover:bg-surface-2/60"
               >
                 <td className="whitespace-nowrap px-4 py-3 text-muted">
                   {formatDate(t.occurred_at)}
                 </td>
-                <td className="px-4 py-3">{t.description}</td>
+                <td className="px-4 py-3 text-text">{t.description}</td>
                 <td className="px-4 py-3 text-muted">
                   {isIncome
                     ? t.customer_name || "—"
                     : t.category || "Uncategorized"}
                 </td>
                 <td
-                  className={`whitespace-nowrap px-4 py-3 text-right font-semibold ${
+                  className={`whitespace-nowrap px-4 py-3 text-right font-display font-semibold ${
                     refunded
-                      ? "text-muted line-through"
+                      ? "text-muted-2 line-through"
                       : isIncome
                         ? "text-income"
                         : "text-expense"
@@ -59,15 +54,15 @@ export default function TransactionTable({
                 </td>
                 <td className="px-4 py-3 text-right">
                   {isIncome ? (
-                    refunded ? (
-                      <span className="rounded bg-expense/15 px-2 py-0.5 text-[10px] uppercase text-expense">
-                        Refunded
-                      </span>
-                    ) : (
-                      <span className="rounded bg-accent/15 px-2 py-0.5 text-[10px] uppercase text-income">
-                        Completed
-                      </span>
-                    )
+                    <span
+                      className={`rounded px-2 py-0.5 font-display text-[10px] font-semibold uppercase tracking-wide ${
+                        refunded
+                          ? "bg-expense/15 text-expense"
+                          : "bg-income/12 text-income"
+                      }`}
+                    >
+                      {refunded ? "Refunded" : "Completed"}
+                    </span>
                   ) : (
                     <DeleteExpenseButton id={t.id} />
                   )}
@@ -78,5 +73,21 @@ export default function TransactionTable({
         </tbody>
       </table>
     </div>
+  );
+}
+
+function Th({
+  children,
+  className = "",
+}: {
+  children: React.ReactNode;
+  className?: string;
+}) {
+  return (
+    <th
+      className={`px-4 py-3 font-display text-[0.7rem] font-semibold uppercase tracking-[0.12em] text-muted-2 ${className}`}
+    >
+      {children}
+    </th>
   );
 }

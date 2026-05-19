@@ -2,6 +2,7 @@
 
 import { useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
+import { Trash2 } from "lucide-react";
 import { deleteTransaction } from "@/lib/actions";
 
 export default function DeleteExpenseButton({ id }: { id: string }) {
@@ -22,13 +23,13 @@ export default function DeleteExpenseButton({ id }: { id: string }) {
         <button
           onClick={remove}
           disabled={pending}
-          className="text-expense hover:underline"
+          className="font-semibold text-expense hover:underline"
         >
           {pending ? "Deleting…" : "Confirm"}
         </button>
         <button
           onClick={() => setConfirming(false)}
-          className="text-muted hover:underline"
+          className="text-muted-2 hover:text-text"
         >
           Cancel
         </button>
@@ -39,10 +40,10 @@ export default function DeleteExpenseButton({ id }: { id: string }) {
   return (
     <button
       onClick={() => setConfirming(true)}
-      className="text-xs text-muted hover:text-expense"
+      className="inline-flex items-center gap-1 text-xs text-muted-2 transition-colors hover:text-expense"
       aria-label="Delete expense"
     >
-      Delete
+      <Trash2 size={13} />
     </button>
   );
 }

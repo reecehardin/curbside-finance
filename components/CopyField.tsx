@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { Copy, Check } from "lucide-react";
 
 export default function CopyField({ value }: { value: string }) {
   const [copied, setCopied] = useState(false);
@@ -17,14 +18,23 @@ export default function CopyField({ value }: { value: string }) {
 
   return (
     <div className="flex items-center gap-2">
-      <code className="flex-1 truncate rounded-lg border border-border bg-bg px-3 py-2 text-sm">
+      <code className="flex-1 truncate rounded-lg border border-border bg-bg-deep px-3 py-2 text-sm text-primary-bright">
         {value}
       </code>
       <button
         onClick={copy}
-        className="shrink-0 rounded-lg border border-border px-3 py-2 text-sm text-muted transition-colors hover:bg-surface-2 hover:text-text"
+        className="btn-ghost shrink-0 px-3 py-2"
+        aria-label="Copy to clipboard"
       >
-        {copied ? "Copied!" : "Copy"}
+        {copied ? (
+          <>
+            <Check size={14} className="text-income" /> Copied
+          </>
+        ) : (
+          <>
+            <Copy size={14} /> Copy
+          </>
+        )}
       </button>
     </div>
   );

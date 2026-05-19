@@ -15,35 +15,29 @@ export default function PeriodToggle({
   const pathname = usePathname();
 
   function go(period: string) {
-    const qs = period ? `?period=${period}` : "";
-    router.push(`${pathname}${qs}`);
+    router.push(`${pathname}${period ? `?period=${period}` : ""}`);
   }
 
   const onThisMonth = current === thisMonthKey;
   const onAll = current === "all";
-  // A past month is selected when it's neither the current month nor all-time.
   const pastMonth = !onThisMonth && !onAll ? current : "";
+
+  const seg = (activeFlag: boolean) =>
+    `px-3.5 py-1.5 text-sm font-medium transition-colors ${
+      activeFlag
+        ? "bg-primary/15 text-primary-bright"
+        : "text-muted hover:bg-surface-2 hover:text-text"
+    }`;
 
   return (
     <div className="flex items-center gap-2">
-      <div className="flex overflow-hidden rounded-lg border border-border">
-        <button
-          onClick={() => go(thisMonthKey)}
-          className={`px-3 py-1.5 text-sm transition-colors ${
-            onThisMonth
-              ? "bg-accent/15 font-semibold text-accent-soft"
-              : "text-muted hover:bg-surface-2"
-          }`}
-        >
+      <div className="flex overflow-hidden rounded-lg border border-border bg-surface">
+        <button onClick={() => go(thisMonthKey)} className={seg(onThisMonth)}>
           This Month
         </button>
         <button
           onClick={() => go("all")}
-          className={`border-l border-border px-3 py-1.5 text-sm transition-colors ${
-            onAll
-              ? "bg-accent/15 font-semibold text-accent-soft"
-              : "text-muted hover:bg-surface-2"
-          }`}
+          className={`border-l border-border ${seg(onAll)}`}
         >
           All Time
         </button>
@@ -52,7 +46,7 @@ export default function PeriodToggle({
       <select
         value={pastMonth}
         onChange={(e) => e.target.value && go(e.target.value)}
-        className="input w-auto py-1.5 text-sm"
+        className="input w-auto cursor-pointer py-1.5 text-sm"
       >
         <option value="">Pick a month…</option>
         {months.map((m) => (
