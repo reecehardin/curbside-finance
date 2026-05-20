@@ -12,8 +12,8 @@ export default function TransactionTable({
   const isIncome = variant === "income";
 
   return (
-    <div className="card overflow-hidden">
-      <table className="w-full text-sm">
+    <div className="card overflow-x-auto">
+      <table className="w-full min-w-[640px] text-sm">
         <thead>
           <tr className="border-b border-border text-left">
             <Th>Date</Th>

@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Saira, Saira_Condensed } from "next/font/google";
 import "./globals.css";
 
@@ -18,6 +18,12 @@ export const metadata: Metadata = {
   title: "Curbside LA — Finance",
   description: "Income & expense tracker for the Curbside LA FiveM server",
   icons: { icon: "/logo.png" },
+};
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  themeColor: "#06070d",
 };
 
 export default function RootLayout({
