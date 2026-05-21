@@ -45,6 +45,42 @@ export async function addExpense(formData: FormData): Promise<ActionResult> {
   return { ok: true };
 }
 
+/** Records a manual income entry (e.g. CashApp tip, cash donation). */
+export async function addIncome(formData: FormData): Promise<ActionResult> {
+  const description = String(formData.get("description") ?? "").trim();
+  const customer = String(formData.get("customer_name") ?? "").trim();
+  const amountRaw = String(formData.get("amount") ?? "").trim();
+  const dateRaw = String(formData.get("occurred_at") ?? "").trim();
+
+  if (!description) return { ok: false, error: "Description is required." };
+
+  const amount = Number(amountRaw);
+  if (!Number.isFinite(amount) || amount <= 0) {
+    return { ok: false, error: "Enter an amount greater than 0." };
+  }
+
+  const occurredAt = dateRaw
+    ? new Date(`${dateRaw}T12:00:00Z`).toISOString()
+    : new Date().toISOString();
+
+  const supabase = await createClient();
+  const { error } = await supabase.from("transactions").insert({
+    type: "income",
+    amount,
+    description,
+    customer_name: customer || null,
+    occurred_at: occurredAt,
+    source: "manual",
+    status: "completed",
+  });
+
+  if (error) return { ok: false, error: error.message };
+
+  revalidatePath("/");
+  revalidatePath("/income");
+  return { ok: true };
+}
+
 /** Deletes a transaction (used to remove a mistaken manual expense). */
 export async function deleteTransaction(id: string): Promise<ActionResult> {
   const supabase = await createClient();

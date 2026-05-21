@@ -2,7 +2,7 @@ import PageHeader from "@/components/PageHeader";
 import PeriodToggle from "@/components/PeriodToggle";
 import TransactionTable from "@/components/TransactionTable";
 import EmptyState from "@/components/EmptyState";
-import AddExpenseModal from "@/components/AddExpenseModal";
+import AddTransactionModal from "@/components/AddTransactionModal";
 import { getTransactions } from "@/lib/queries";
 import { resolvePeriod, listRecentMonths } from "@/lib/period";
 import { formatMoney } from "@/lib/format";
@@ -32,7 +32,7 @@ export default async function ExpensesPage({
           thisMonthKey={thisMonth.key}
           months={listRecentMonths(12)}
         />
-        <AddExpenseModal />
+        <AddTransactionModal defaultType="expense" />
       </PageHeader>
 
       {rows.length ? (

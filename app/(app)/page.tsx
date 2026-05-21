@@ -1,5 +1,6 @@
 import PageHeader from "@/components/PageHeader";
 import PeriodToggle from "@/components/PeriodToggle";
+import AddTransactionModal from "@/components/AddTransactionModal";
 import SummaryCard from "@/components/SummaryCard";
 import Panel from "@/components/Panel";
 import EmptyState from "@/components/EmptyState";
@@ -32,6 +33,7 @@ export default async function DashboardPage({
           thisMonthKey={thisMonth.key}
           months={listRecentMonths(12)}
         />
+        <AddTransactionModal buttonLabel="Add" />
       </PageHeader>
 
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
