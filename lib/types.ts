@@ -1,5 +1,5 @@
 export type TransactionType = "income" | "expense";
-export type TransactionSource = "tebex" | "manual";
+export type TransactionSource = "tebex" | "manual" | "recurring";
 export type TransactionStatus = "completed" | "refunded";
 
 export interface Transaction {
@@ -14,6 +14,7 @@ export interface Transaction {
   source: TransactionSource;
   status: TransactionStatus;
   tebex_transaction_id: string | null;
+  recurring_expense_id: string | null;
   raw_payload: unknown;
   created_at: string;
 }
@@ -27,3 +28,21 @@ export const EXPENSE_CATEGORIES = [
   "Software & Tools",
   "Other",
 ] as const;
+
+/** A subscription that bills every month on `billing_day`. */
+export interface RecurringExpense {
+  id: string;
+  name: string;
+  /** USD amount posted each month. */
+  amount: number;
+  /** Original price when the sub bills in another currency (e.g. 20 EUR). */
+  original_amount: number | null;
+  original_currency: string | null;
+  category: string | null;
+  /** Day of month it bills, 1–31 (clamped in short months). */
+  billing_day: number;
+  /** Next date a charge should post, YYYY-MM-DD. */
+  next_billing_date: string;
+  active: boolean;
+  created_at: string;
+}
