@@ -15,6 +15,8 @@ export interface Transaction {
   status: TransactionStatus;
   tebex_transaction_id: string | null;
   recurring_expense_id: string | null;
+  /** First day of the charge's month — set only on recurring charges. */
+  billing_month: string | null;
   raw_payload: unknown;
   created_at: string;
 }

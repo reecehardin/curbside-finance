@@ -72,5 +72,9 @@ export async function GET(request: Request) {
     }
   }
 
-  return NextResponse.json({ posted, skipped, errors });
+  // Non-2xx when anything failed so Vercel's cron monitoring flags the run.
+  return NextResponse.json(
+    { posted, skipped, errors },
+    { status: errors.length ? 500 : 200 },
+  );
 }
