@@ -6,6 +6,7 @@ import {
   LayoutDashboard,
   ArrowDownLeft,
   ArrowUpRight,
+  CalendarClock,
   Settings,
   type LucideIcon,
 } from "lucide-react";
@@ -14,6 +15,7 @@ const ITEMS: { href: string; label: string; icon: LucideIcon }[] = [
   { href: "/", label: "Dashboard", icon: LayoutDashboard },
   { href: "/income", label: "Income", icon: ArrowDownLeft },
   { href: "/expenses", label: "Expenses", icon: ArrowUpRight },
+  { href: "/monthly", label: "Monthly", icon: CalendarClock },
   { href: "/settings", label: "Settings", icon: Settings },
 ];
 
