@@ -34,7 +34,14 @@ export default function TransactionTable({
                 <td className="whitespace-nowrap px-4 py-3 text-muted">
                   {formatDate(t.occurred_at)}
                 </td>
-                <td className="px-4 py-3 text-text">{t.description}</td>
+                <td className="px-4 py-3 text-text">
+                  {t.description}
+                  {t.source === "recurring" && (
+                    <span className="ml-2 rounded bg-primary/10 px-1.5 py-0.5 font-display text-[10px] font-semibold uppercase tracking-wide text-primary-bright">
+                      Recurring
+                    </span>
+                  )}
+                </td>
                 <td className="px-4 py-3 text-muted">
                   {isIncome
                     ? t.customer_name || "—"
